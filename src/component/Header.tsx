@@ -55,7 +55,7 @@ const Header: React.FC = () => {
           <Avatar name="Sadeed" size={35} round={true} />
         </div>
       </div>
-      <ReactTooltip backgroundColor="#403e3f" isCapture />
+        
     </div>
   );
 };
