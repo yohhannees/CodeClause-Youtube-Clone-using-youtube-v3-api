@@ -12,10 +12,10 @@ function App() {
       <div className="my-16 ">
        
         <NavBar />
-      </div>
+      </div> */}
 
-      <VideoList /> */}
-      <Sidebar />
+      <VideoList />
+      {/* <Sidebar /> */}
     </div>
   );
 }
