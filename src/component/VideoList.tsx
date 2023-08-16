@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../Api/api";
+
 import {
+  FaBell,
   FaThumbsUp,
   FaThumbsDown,
   FaShare,
   FaDownload,
-  FaEllipsisH,
-  FaBell,
 } from "react-icons/fa";
 
 interface VideoItem {
@@ -34,7 +34,6 @@ const VideoList: React.FC = () => {
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
   const [loading, setLoading] = useState(true);
-  const [relatedVideos, setRelatedVideos] = useState<VideoItem[]>([]);
 
   useEffect(() => {
     axiosInstance
@@ -56,76 +55,146 @@ const VideoList: React.FC = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (selectedVideo) {
-      axiosInstance
-        .get("search", {
-          params: {
-            relatedToVideoId: selectedVideo.id.videoId,
-            maxResults: 20,
-            part: "snippet",
-          },
-        })
-        .then((response) => {
-          setRelatedVideos(response.data.items);
-        })
-        .catch((error) => {
-          console.error("Error fetching related videos:", error);
-        });
-    }
-  }, [selectedVideo]);
-
   return (
     <div className="flex">
+      <div className="flex-1 pr-4">
+        {selectedVideo ? (
+          <div>
+            {/* Video Player */}
+            <iframe
+              width="120%"
+              height="390"
+              src={`https://www.youtube.com/embed/${selectedVideo.id.videoId}`}
+              title="YouTube video player"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+            {/* Video and Channel Information */}
+            <div className="mt-4">
+              <p className="text-xl font-semibold">
+                {selectedVideo.snippet.title}
+              </p>
+              <p className="text-gray-500">
+                {selectedVideo.snippet.channelTitle}
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: "20px",
+                      padding: "5px 10px",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "30px",
+                    }}
+                  >
+                    <FaBell style={{ marginRight: "5px" }} />
+                    <span>Subscribed</span>
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: "20px",
+                      padding: "5px 10px",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <FaThumbsUp style={{ marginRight: "5px" }} />
+                    <span>Like</span>
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: "20px",
+                      padding: "5px 10px",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <FaThumbsDown style={{ marginRight: "5px" }} />
+                    <span>Dislike</span>
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: "20px",
+                      padding: "5px 10px",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <FaShare style={{ marginRight: "5px" }} />
+                    <span>Share</span>
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: "20px",
+                      padding: "5px 10px",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <FaDownload style={{ marginRight: "5px" }} />
+                    <span>Download</span>
+                  </div>
+                </div>
+              </p>
+            </div>
+            {/* Icons for UI */}
+            <div className="flex mt-4"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {loading || videos.length === 0
+              ? Array.from({ length: 12 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="p-4 border border-gray-300 animate-pulse"
+                  >
+                    <div className="bg-gray-300 h-32 mb-4"></div>
+                    <div className="bg-gray-200 h-4 w-2/3 mb-2"></div>
+                    <div className="bg-gray-200 h-4 w-1/2"></div>
+                  </div>
+                ))
+              : videos.map((video) => (
+                  <div
+                    key={video.id.videoId}
+                    className="p-4 border border-gray-300 rounded cursor-pointer"
+                    onClick={() => setSelectedVideo(video)}
+                  >
+                    <img
+                      src={video.snippet.thumbnails.medium.url}
+                      alt={video.snippet.title}
+                    />
+                    <h2 className="mt-2 text-xl font-semibold">
+                      {truncate(video.snippet.title, 40)}
+                    </h2>
+                    <p className="text-gray-500">
+                      {video.snippet.channelTitle}
+                    </p>
+                    <p className="text-gray-500">
+                      {video.snippet.views} views • {video.snippet.publishedAt}
+                    </p>
+                  </div>
+                ))}
+          </div>
+        )}
+      </div>
       {selectedVideo && (
-        <div className="flex-1 pr-4">
-          {/* Video Player */}
-          <iframe
-            width="100%"
-            height="500"
-            src={`https://www.youtube.com/embed/${selectedVideo.id.videoId}`}
-            title="YouTube video player"
-            frameBorder="0"
-            allowFullScreen
-          ></iframe>
-          {/* Icons for UI */}
-          <div className="flex mt-4">
-            <div className="flex items-center pr-4">
-              <FaBell className="text-xl mr-1" />
-              <p>Subscribed</p>
-            </div>
-            <div className="flex items-center pr-4">
-              <FaThumbsUp className="text-xl mr-1" />
-              <FaThumbsDown className="text-xl mr-1" />
-              <FaShare className="text-xl mr-1" />
-              <FaDownload className="text-xl mr-1" />
-              <FaEllipsisH className="text-xl" />
-            </div>
+        <div className="flex-1">
+          {/* List of Fetched Videos */}
+          <div className="grid gap-4">
+            {/* Display other fetched videos in a single column */}
+
+            {/* You can fetch more videos here */}
           </div>
         </div>
       )}
-      <div className="flex-1">
-        {/* List of Fetched Videos */}
-        <div className="grid gap-4 overflow-y-scroll max-h-screen mt-4">
-          {relatedVideos.map((video) => (
-            <div key={video.id.videoId} className="flex gap-4">
-              <img
-                src={video.snippet.thumbnails.medium.url}
-                alt={video.snippet.title}
-                className="w-20 h-20 object-cover rounded"
-              />
-              <div>
-                <p className="text-gray-700 text-sm">
-                  {truncate(video.snippet.title, 40)}
-                </p>
-                <p className="text-gray-500 text-xs">
-                  {video.snippet.channelTitle}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

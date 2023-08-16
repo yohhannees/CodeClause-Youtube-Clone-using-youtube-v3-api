@@ -51,7 +51,7 @@ const Header: React.FC = () => {
           </span>
         </div>
         <div className="mr-5 md:mr-7" data-tip="Your account">
-          <Avatar name="Sadeed" size={35} round={true} />
+            <Avatar name="Sadeed" size={'35'} round={true} />
         </div>
       </div>
     </div>
