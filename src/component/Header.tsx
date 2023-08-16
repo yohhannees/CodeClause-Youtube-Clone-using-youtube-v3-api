@@ -6,7 +6,6 @@ import {
   BsYoutube,
 } from "react-icons/bs";
 import Avatar from "react-avatar";
-import ReactTooltip from "react-tooltip";
 
 const Header: React.FC = () => {
   return (
@@ -21,10 +20,10 @@ const Header: React.FC = () => {
       <div className="flex items-center justify-center relative ml-1 pt-1 hover:text-gray-800">
         <BsYoutube className="text-4xl text-red-600 pr-1" />
         <h2 className="text-2xl text-black-600 font-bold tracking-tighter">
-          MeTube
+          yohannes
         </h2>
         <span className="absolute -right-2 -top-0.5 pl-4 opacity-50 text-[15px]">
-          IN
+          
         </span>
       </div>
       {/* Query field */}
