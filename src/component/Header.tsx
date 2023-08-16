@@ -17,13 +17,13 @@ const Header: React.FC = () => {
         <div className="border-r-1 h-[2px] bg-gray-700 group-hover:bg-gray-500"></div>
       </div>
       {/* Header / YouTube logo */}
-      <div className="flex items-center justify-center relative ml-1 pt-1 hover:text-gray-800">
+      <div className="flex items-center ml-2 md:ml-0 hover:text-gray-800">
         <BsYoutube className="text-4xl text-red-600 pr-1" />
         <h2 className="text-2xl text-black-600 font-bold tracking-tighter">
           yohannes
         </h2>
-        <span className="absolute -right-2 -top-0.5 pl-4 opacity-50 text-[15px]">
-          
+        <span className="opacity-50 text-[15px] pl-4">
+          {/* Your additional content */}
         </span>
       </div>
       {/* Query field */}
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
           <input
             type="text"
             placeholder="Search"
-            className="bg-gray-200 rounded-lg px-4 py-2 w-20 text-gray-800 md:w-[20em] focus:outline-none lg:w-[35em]"
+            className="bg-gray-200 rounded-lg px-4 py-2 w-20 text-gray-800 md:w-[30em] focus:outline-none lg:w-[35em]"
           />
           <BsSearch className="mr-3" />
         </div>
@@ -54,7 +54,6 @@ const Header: React.FC = () => {
           <Avatar name="Sadeed" size={35} round={true} />
         </div>
       </div>
-        
     </div>
   );
 };
