@@ -8,11 +8,11 @@ import Sidebar from "./component/Sidebar";
 function App() {
   return (
     <div className="container mx-auto p-4">
-      {/* <Header />
+      <Header />
       <div className="my-16 ">
        
         <NavBar />
-      </div> */}
+      </div>
 
       <VideoList />
       {/* <Sidebar /> */}
