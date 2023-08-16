@@ -13,10 +13,6 @@
    BsMusicPlayer,
    BsGear,
  } from "react-icons/bs";
-  import {
-    HiOutlineHome,
-  } from "react-icons/hi";
-
  const Sidebar = () => {
    const Items = [
      {
