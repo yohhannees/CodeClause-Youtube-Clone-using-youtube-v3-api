@@ -72,7 +72,7 @@ const VideoList: React.FC = () => {
             {/* Video and Channel Information */}
             <div className="mt-4">
               <p className="text-xl font-semibold">
-                {truncate(selectedVideo.snippet.title, 60)}
+                {selectedVideo.snippet.title}
               </p>
               <p className="text-gray-500">
                 {selectedVideo.snippet.channelTitle}
